@@ -1,7 +1,13 @@
 {% extends '_layouts/base.nunjucks' %}
 
-{% import "_modules/link/link.nunjucks" as link %}
+{% block headline %}My headline will go here{% endblock %}
+{% block byline %}By Julia Donheiser{% endblock %}
+{% block pubdate %}
+    <time datetime="2019-03-09" pubdate>Mar. 9, 2019</time>
+{% endblock %}
 
 {% block content %}
-<p>Hello world</p>
+
+
+
 {% endblock %}
