@@ -33,3 +33,9 @@
     </div>
 </section>
 {% endblock %}
+
+{% block scripts %}
+<script>
+    var annualTotals = {% include '_data/annual_totals.json' %}
+</script>
+{% endblock %}
