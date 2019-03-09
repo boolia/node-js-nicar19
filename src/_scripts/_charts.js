@@ -29,6 +29,7 @@ var yScale = d3.scaleLinear()
 				.range([chartHeight, 0]); // draws from top to bottom
 
 var xAxis = d3.axisBottom(xScale)
+				.tickValues([2000, 2005, 2010, 2015, 2017]);
 var yAxis = d3.axisLeft(yScale)
 				.tickSize(-chartWidth)
 				.ticks(4);
