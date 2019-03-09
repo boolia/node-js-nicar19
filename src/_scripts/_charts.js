@@ -1,55 +1,61 @@
 var d3 = require('d3');
 
-// prevents clipping
-var margin = {top: 20, right: 20, bottom:20, left:40};
+function createChart(id, fieldname) {
 
-var container = d3.select('#county-homicides');
-var containerWidth = container.node().offsetWidth;
-var containerHeight = containerWidth * 0.66;
+	// prevents clipping
+	var margin = {top: 20, right: 20, bottom:20, left:40};
 
-var chartWidth = containerWidth - margin.right - margin.left;
-var chartHeight = containerHeight - margin.top - margin.bottom;
+	var container = d3.select(id);
+	var containerWidth = container.node().offsetWidth;
+	var containerHeight = containerWidth * 0.66;
 
-var svg = container.append('svg')
-				.attr('width', containerWidth)
-				.attr('height', containerHeight)
-				.append('g') // group attributes
-				    .attr('transform', `translate(${margin.left}, ${margin.top})`);
+	var chartWidth = containerWidth - margin.right - margin.left;
+	var chartHeight = containerHeight - margin.top - margin.bottom;
 
-var xDomain = annualTotals.map(d => d.year);
-var yDomain = [0, d3.max(annualTotals.map(d => d.homicides_total))]
+	var svg = container.append('svg')
+					.attr('width', containerWidth)
+					.attr('height', containerHeight)
+					.append('g') // group attributes
+					    .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
-var xScale = d3.scaleBand()
-				.domain(xDomain)
-				.range([0, chartWidth])
-				.padding(0.1); // distance between bars
+	var xDomain = annualTotals.map(d => d.year);
+	var yDomain = [0, d3.max(annualTotals.map(d => d[fieldname]))] // brackets replace var with .hardcodeFieldName
 
-var yScale = d3.scaleLinear()
-				.domain(yDomain)
-				.range([chartHeight, 0]); // draws from top to bottom
+	var xScale = d3.scaleBand()
+					.domain(xDomain)
+					.range([0, chartWidth])
+					.padding(0.1); // distance between bars
 
-var xAxis = d3.axisBottom(xScale)
-				.tickValues([2000, 2005, 2010, 2015, 2017]);
-var yAxis = d3.axisLeft(yScale)
-				.tickSize(-chartWidth)
-				.ticks(4);
-				
+	var yScale = d3.scaleLinear()
+					.domain(yDomain)
+					.range([chartHeight, 0]); // draws from top to bottom
 
-svg.append('g')
-	.attr('class', 'x axis')
-	.attr('transform', `translate(0, ${chartHeight})`)
-	.call(xAxis);
+	var xAxis = d3.axisBottom(xScale)
+					.tickValues([2000, 2005, 2010, 2015, 2017]);
+	var yAxis = d3.axisLeft(yScale)
+					.tickSize(-chartWidth)
+					.ticks(4);
+					
 
-svg.append('g')
-	.attr('class', 'y axis')
-	.call(yAxis);
+	svg.append('g')
+		.attr('class', 'x axis')
+		.attr('transform', `translate(0, ${chartHeight})`)
+		.call(xAxis);
 
-svg.selectAll('.bar')
-	.data(annualTotals)
-	.enter()
-	.append('rect')
-	.attr('class', 'bar')
-	.attr('x', d => xScale(d.year))
-	.attr('y', d => yScale(d.homicides_total))
-	.attr('width', xScale.bandwidth())
-	.attr('height', d => chartHeight - yScale(d.homicides_total));
+	svg.append('g')
+		.attr('class', 'y axis')
+		.call(yAxis);
+
+	svg.selectAll('.bar')
+		.data(annualTotals)
+		.enter()
+		.append('rect')
+		.attr('class', 'bar')
+		.attr('x', d => xScale(d.year))
+		.attr('y', d => yScale(d[fieldname]))
+		.attr('width', xScale.bandwidth())
+		.attr('height', d => chartHeight - yScale(d[fieldname]));
+};
+
+createChart('#county-homicides', 'homicides_total');
+createChart('#harvard-park-homicides', 'homicides_harvard_park');
