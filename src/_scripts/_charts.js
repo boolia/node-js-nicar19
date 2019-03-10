@@ -46,6 +46,9 @@ function createChart(id, fieldname) {
 		.attr('class', 'y axis')
 		.call(yAxis);
 
+	var tooltip = svg.append('text')
+	    .attr('class', 'chart-tooltip');
+
 	svg.selectAll('.bar')
 		.data(annualTotals)
 		.enter()
@@ -54,7 +57,22 @@ function createChart(id, fieldname) {
 		.attr('x', d => xScale(d.year))
 		.attr('y', d => yScale(d[fieldname]))
 		.attr('width', xScale.bandwidth())
-		.attr('height', d => chartHeight - yScale(d[fieldname]));
+		.attr('height', d => chartHeight - yScale(d[fieldname]))
+	    .on('mouseenter', function(d) {
+	    	// center text above bar
+	    	var x = xScale(d.year) + xScale.bandwidth() / 2;
+	    	// subtract 5 so texxt isn't directly over bar
+	    	var y = yScale(d[fieldname]) - 5;
+
+	        d3.select(this).classed('highlight', true);
+	        tooltip.text(d[fieldname])
+	        	.attr('transform', `translate(${x}, ${y})`)
+	        	.raise(); // brings text to front
+	    })
+	    .on('mouseleave', function(d) {
+	        d3.select(this).classed('highlight', false);
+	        tooltip.text('');
+		});
 };
 
 createChart('#county-homicides', 'homicides_total');
