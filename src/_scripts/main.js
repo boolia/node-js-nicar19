@@ -4,3 +4,9 @@
 'use strict';
 
 var chart = require('./_charts.js');
+
+var L = require('leaflet');
+var map = require('./_map.js');
+
+// weird compatibility thing btwn leaflet and yeogurt
+L.Icon.Default.imagePath = 'https://unpkg.com/leaflet@1.4.0/dist/images/';
