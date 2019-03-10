@@ -7,4 +7,4 @@ map.setView([33.983265, -118.306799], 18); // set intial view, second value is z
 homicides.forEach(obj =>
 	L.circleMarker([obj.latitude,  obj.longitude])
 	    .addTo(map)
-		.bindTooltip(obj.first_name + " " + obj.last_name));
+		.bindTooltip(`${obj.first_name} ${obj.last_name}`, {permanent: true}));
