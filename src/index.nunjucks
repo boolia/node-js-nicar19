@@ -46,6 +46,7 @@
 
 {% block scripts %}
 <script>
-    var annualTotals = {% include '_data/annual_totals.json' %}
+    var annualTotals = {% include '_data/annual_totals.json' %};
+    var homicides = {% include '_data/harvard_park_homicides.json' %};
 </script>
 {% endblock %}
