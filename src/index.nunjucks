@@ -1,6 +1,6 @@
 {% extends '_layouts/base.nunjucks' %}
 
-{% block headline %}My headline will go here{% endblock %}
+{% block headline %}A South L.A. neighborhood grapples with a wave of violence{% endblock %}
 {% block byline %}By Julia Donheiser{% endblock %}
 {% block pubdate %}
     <time datetime="2019-03-09" pubdate>Mar. 9, 2019</time>
@@ -10,7 +10,10 @@
 <div id="map"></div>
 
 <section>
-    <h3>A South L.A. neighborhood stands apart</h3>
+    <p>The area around Harvard Park was the deadliest place for African Americans in Los Angeles County last year, according to <a href="http://homicide.latimes.com/">The Times’ Homicide Report</a>. So far this year, six people have been killed. Most of the victims were black men.</p>
+</section>
+<section>
+    <h3>One corner. Four killings</h3>
     <p>Harvard Park's 2016 homicide total was its highest in at least 15 years despite a downward trend in killings across L.A. County.</p>
 
     <div class="charts">
@@ -24,7 +27,7 @@
 </section>
 
 <section>
-    <h3>Lives lost</h3>
+    <h3>A South L.A. neighborhood stands apart</h3>
     <p>The {{ site.data.harvard_park_homicides|length }} homicides in Harvard Park since 2000 were primarily black and Latino males, but the list includes husbands, wives, fathers, mothers of all ages, and even some small children.</p>
 
     <div class="card-columns">
